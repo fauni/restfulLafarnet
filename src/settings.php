@@ -11,7 +11,7 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => 'LafarApi',
+            'name' => 'Lafarnet',
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],

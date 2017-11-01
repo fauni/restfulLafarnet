@@ -2,14 +2,15 @@
 $base = __DIR__ . '/../app/';
 
 $folders = [
+    'common',
+    'entitie',
+    'exception',
+    'helper',
+    'http',
     'lib',
     'model',
-    'route',
+    'route'
 ];
-
-
-
-
 
 foreach($folders as $f)
 {
@@ -18,4 +19,3 @@ foreach($folders as $f)
         require $filename;
     }
 }
-

@@ -10,7 +10,7 @@ $app->group('/seccion/', function () {
     
     $this->get('get', function ($req, $res, $args) {
         $um = new SeccionModel();
-        
+        $this->logger->info("Consulta Seccion: ".$res); 
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()

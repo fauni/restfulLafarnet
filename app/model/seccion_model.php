@@ -27,7 +27,7 @@ class SeccionModel
             
 			$this->response->setResponse(true);
             $this->response->result = $stm->fetchAll();
-            
+            $this->response->message = "Se obtuvieron ".$stm->rowCount()." registros";
             return $this->response;
 		}
 		catch(Exception $e)
