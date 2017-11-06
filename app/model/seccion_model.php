@@ -8,6 +8,7 @@ class SeccionModel
 {
     private $db;
     private $table = 'seccion';
+    private $aux;
     private $response;
     
     public function __CONSTRUCT()
