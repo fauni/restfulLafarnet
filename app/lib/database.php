@@ -11,7 +11,7 @@ class Database
         $DB_host = "localhost";
         $DB_user = "root";
         $DB_pass = "";
-        $DB_name = "lafarnet";
+        $DB_name = "newlafarnet";
 
         $pdo = new PDO('mysql:host='.$DB_host.';dbname='.$DB_name.';charset=utf8', $DB_user, $DB_pass);
         

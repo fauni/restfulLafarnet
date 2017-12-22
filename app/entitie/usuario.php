@@ -20,7 +20,15 @@ class Usuario {
     private $id_regional;
     private $nivel_permisos;
     private $id_superior;
+    private $id_area;
+    private $id_foto;
     private $estado_user;
+    private $usuario_creacion;
+    private $fecha_creacion;
+    private $usuario_modificacion;
+    private $fecha_modificacion;
+
+    
     
     public function __construct() {
         //parent::__construct();
@@ -43,6 +51,10 @@ class Usuario {
     public function getNivel_permisos(){ return $this->nivel_permisos; }
     public function getId_superior(){ return $this->id_superior; }
     public function getEstado_user(){ return $this->estado_user; }
+    public function getusuario_creacion(){ return $this->usuario_creacion; }
+    public function getfecha_creacion(){ return $this->fecha_creacion; }
+    public function getusuario_modificacion(){ return $this->usuario_modificacion; }
+    public function getfecha_modificacion(){ return $this->fecha_modificacion; }
 
     public function setUserid($userid){ 
         $this->userid=$userid; 
@@ -108,8 +120,32 @@ class Usuario {
         $this->id_superior=$id_superior; 
     }
 
+    public function setId_area($id_area){ 
+        $this->id_area=$id_area; 
+    }
+
+    public function setId_foto($id_foto){ 
+        $this->id_foto=$id_foto; 
+    }
+
     public function setEstado_user($estado_user){ 
         $this->estado_user=$estado_user; 
+    }
+
+    public function setUsuario_creacion($usuario_creacion){ 
+        $this->usuario_creacion=$usuario_creacion; 
+    }
+
+    public function setFecha_creacion($fecha_creacion){ 
+        $this->fecha_creacion=$fecha_creacion; 
+    }
+
+    public function setUsuario_modificacion($usuario_modificacion){ 
+        $this->usuario_modificacion=$usuario_modificacion; 
+    }
+
+    public function setFecha_modificacion($fecha_modificacion){ 
+        $this->fecha_modificacion=$fecha_modificacion; 
     }
 }
 
