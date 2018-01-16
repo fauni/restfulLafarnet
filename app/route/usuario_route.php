@@ -17,6 +17,19 @@ $app->group('/usuario/', function () {
         );
     });
 
+    $this->get('get/{username}', function ($req, $res, $args) {
+        $um = new UsuarioModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Get($args['username'])
+            )
+        );
+    });
+
     $this->post('save', function ($req, $res) {
         $um = new SeccionModel();
         

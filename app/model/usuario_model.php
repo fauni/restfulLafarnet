@@ -25,7 +25,10 @@
             {
                 $result = array();
     
-                $stm = $this->db->prepare("SELECT * FROM $this->table where userid<10");
+                $stm = $this->db->prepare("SELECT u.first_name, u.last_name, u.email_address, u.username, u.password, u.id_cargo, c.nombre_cargo as cargo, 
+u.id_regional, r.nombre as regional, u.id_grupo, u.id_area, a.nombre as area, u.foto, u.estado, e.nombre_estado
+from users u inner join cargos c on u.id_cargo= c.id inner join regional r on u.id_regional=r.id inner join areas a 
+on u.id_area=a.id inner join estados e on u.estado = e.id");
                 $stm->execute();
                 
                 $this->response->setStatus(200);
@@ -40,10 +43,39 @@
             }
         }
 
+        public function Get($username)
+        {
+            try
+            {
+                $result = array();
+
+                $stm = $this->db->prepare("SELECT * FROM $this->table WHERE username = ?");
+                $stm->execute(array($username));
+
+                $this->response->setStatus(200);
+                $this->response->setBody($stm->fetchAll());
+                $this->response->message=$this->response->getMessageForCode(200);
+                
+                return $this->response;
+            }
+            catch(Exception $e)
+            {
+                $this->response->setResponse(false, $e->getMessage());
+                return $this->response;
+            }
+        }   
+
+
         public function Login($data){
             try{
 
-                $stm = $this->db->prepare("SELECT * FROM users as u inner join super_area sa on u.id_area = sa.id_super_area where u.username = ? AND u.password= ?");
+
+                $stm= $this->db->prepare("SELECT u.first_name, u.last_name, u.email_address, u.username, u.password, u.id_cargo, c.nombre_cargo as cargo, 
+u.id_regional, r.nombre as regional, u.id_grupo, u.id_area, a.nombre as area, u.foto, u.estado, e.nombre_estado
+from users u inner join cargos c on u.id_cargo= c.id inner join regional r on u.id_regional=r.id inner join areas a 
+on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=? and u.password=?");
+
+                //$stm = $this->db->prepare("SELECT * FROM users as u inner join super_area sa on u.id_area = sa.id_super_area where u.username = ? AND u.password= ?");
                 $stm->execute(
                     array(
                         $data['userid'],
