@@ -126,12 +126,13 @@ class PublicacionModel
             $actualPath = "C:\\xampp\htdocs\\newApiLafarnet\\assets\\publicaciones_images\\".$nombreModificado;
             if (move_uploaded_file($tempPath, $actualPath)) {
 
-                $stm = $this->db->prepare("INSERT INTO publicacion (titulo, nombreAdjunto, usuarioPublicacion, idTipo , fechaPublicacion, fechaCaduca, estado, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
-values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stm = $this->db->prepare("INSERT INTO publicacion (titulo, nombreAdjunto, extension, usuarioPublicacion, idTipo , fechaPublicacion, fechaCaduca, estado, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
+values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $stm->execute(
                     array(
                         $data['titulo'],
-                        $nombreModificado,
+                        trim($nombreModificado),
+                        $ext,
                         $data['username'],
                         $data['tipo_publicacion'],
                         date('Y-m-d H:i:s'),

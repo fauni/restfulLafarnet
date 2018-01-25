@@ -49,7 +49,10 @@ on u.id_area=a.id inner join estados e on u.estado = e.id");
             {
                 $result = array();
 
-                $stm = $this->db->prepare("SELECT * FROM $this->table WHERE username = ?");
+                $stm = $this->db->prepare("SELECT u.first_name, u.last_name, u.email_address, u.username, u.password, u.id_cargo, c.nombre_cargo as cargo, 
+u.id_regional, r.nombre as regional, u.id_grupo, u.id_area, a.nombre as area, u.foto, u.estado, e.nombre_estado
+from users u inner join cargos c on u.id_cargo= c.id inner join regional r on u.id_regional=r.id inner join areas a 
+on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
                 $stm->execute(array($username));
 
                 $this->response->setStatus(200);
