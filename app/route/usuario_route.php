@@ -31,7 +31,7 @@ $app->group('/usuario/', function () {
     });
 
     $this->post('save', function ($req, $res) {
-        $um = new SeccionModel();
+      $um = new UsuarioModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -42,9 +42,9 @@ $app->group('/usuario/', function () {
                     $req->getParsedBody()
                 )
             )
-        );
+        );      
     });
-
+    
     $this->post('login', function ($req, $res) {
         $um = new UsuarioModel();
         //print_r ($req->getParsedBody());
@@ -75,6 +75,62 @@ $app->group('/usuario/', function () {
               )
             )
         );
+    });
+
+    $this->put('changePassword', function ($req, $res) {
+      $um = new UsuarioModel();  
+      return $res
+         ->withHeader('Content-type', 'application/json')
+         ->getBody()
+         ->write(
+          json_encode(
+              $um->changePassword(
+                  $req->getParsedBody()
+              )
+          )
+      );      
+    });
+
+    $this->put('updateInformationGeneral', function ($req, $res) {
+      $um = new UsuarioModel();  
+      return $res
+         ->withHeader('Content-type', 'application/json')
+         ->getBody()
+         ->write(
+          json_encode(
+              $um->updateInformationGeneral(
+                  $req->getParsedBody()
+              )
+          )
+      );      
+    });
+
+    $this->put('updateInformationLaboral', function ($req, $res) {
+      $um = new UsuarioModel();  
+      return $res
+         ->withHeader('Content-type', 'application/json')
+         ->getBody()
+         ->write(
+          json_encode(
+              $um->updateInformationLaboral(
+                  $req->getParsedBody()
+              )
+          )
+      );      
+    });
+
+    $this->put('delete', function ($req, $res) {
+      $um = new UsuarioModel();  
+      return $res
+         ->withHeader('Content-type', 'application/json')
+         ->getBody()
+         ->write(
+          json_encode(
+              $um->DeleteUser(
+                  $req->getParsedBody()
+              )
+          )
+      );      
     });
 });
 

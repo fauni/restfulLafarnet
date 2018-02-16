@@ -2,11 +2,11 @@
 
 namespace App\Entitie;
 
-class Area {
+class Regional {
     
     private $id;
 	private $nombre;
-	private $id_super_area;
+	private $codigo_regional;
 	private $estado;
     private $usuario_creacion;
     private $fecha_creacion;
@@ -19,7 +19,7 @@ class Area {
 
 	public function getId(){ return $this->id;}
 	public function getNombre(){ return $this->nombre;}
-	public function getId_super_area(){ return $this->id_super_area;}
+	public function getCodigo_regional(){ return $this->codigo_regional;}
 	public function getEstado(){ return $this->estado;}
     public function getUsuario_creacion(){ return $this->usuario_creacion;}
     public function getFecha_creacion(){ return $this->fecha_creacion;}
@@ -33,13 +33,12 @@ class Area {
 	public function setNombre($nombre){
 		$this->nombre = $nombre;
 	}
-	public function setId_super_area($id_super_area){
-		$this->id_super_area = $id_super_area;
+	public function setCodigo_regional($codigo_regional){
+		$this->codigo_regional = $codigo_regional;
 	}
 	public function setEstado($estado){
 		$this->estado = $estado;
 	}
-
     public function setUsuario_creacion($usuario_creacion){ 
         $this->usuario_creacion = $usuario_creacion;
     }

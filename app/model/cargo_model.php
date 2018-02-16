@@ -1,15 +1,15 @@
 <?php
 namespace App\Model;
 
-use App\Entitie\Area;
+use App\Entitie\Cargo;
 use App\Lib\Database;
 use App\Lib\Hash;
 use App\Http\Response;
 
-class AreaModel
+class CargoModel
 {
     private $db;
-    private $table = 'areas';
+    private $table = 'cargos';
     private $response;
     
     public function __CONSTRUCT()
@@ -24,7 +24,7 @@ class AreaModel
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table order by nombre asc");
+            $stm = $this->db->prepare("SELECT * FROM $this->table order by descripcion asc");
             $stm->execute();
             
             $this->response->setStatus(200);

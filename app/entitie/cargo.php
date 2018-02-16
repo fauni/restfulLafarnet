@@ -2,12 +2,12 @@
 
 namespace App\Entitie;
 
-class Area {
+class Cargo {
     
     private $id;
-	private $nombre;
-	private $id_super_area;
-	private $estado;
+    private $nombre_cargo;
+    private $descripcion;
+    private $estado;
     private $usuario_creacion;
     private $fecha_creacion;
     private $usuario_modificacion;
@@ -17,29 +17,29 @@ class Area {
         //parent::__construct();
     }
 
-	public function getId(){ return $this->id;}
-	public function getNombre(){ return $this->nombre;}
-	public function getId_super_area(){ return $this->id_super_area;}
-	public function getEstado(){ return $this->estado;}
+
+    public function getId(){ return $this->id;}
+    public function getNombre_cargo(){ return $this->nombre_cargo;}
+    public function getDescripcion(){ return $this->descripcion;}
+    public function getEstado(){ return $this->estado;}
     public function getUsuario_creacion(){ return $this->usuario_creacion;}
     public function getFecha_creacion(){ return $this->fecha_creacion;}
     public function getUsuario_modificacion(){ return $this->usuario_modificacion;}
     public function getFecha_modificacion(){ return $this->fecha_modificacion;}
 
 
-    public function setId($id){
-    	$this->id = $id;
+    public function setId($id){ 
+        $this->id = $id;
     }
-	public function setNombre($nombre){
-		$this->nombre = $nombre;
-	}
-	public function setId_super_area($id_super_area){
-		$this->id_super_area = $id_super_area;
-	}
-	public function setEstado($estado){
-		$this->estado = $estado;
-	}
-
+    public function setNombre_cargo($nombre_cargo){ 
+        $this->nombre_cargo = $nombre_cargo;
+    }
+    public function setDescripcion($descripcion){ 
+        $this->descripcion = $descripcion;
+    }
+    public function setEstado($estado){ 
+        $this->estado = $estado;
+    }
     public function setUsuario_creacion($usuario_creacion){ 
         $this->usuario_creacion = $usuario_creacion;
     }
