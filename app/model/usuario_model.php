@@ -5,6 +5,7 @@ namespace App\Model;
 use App\Entitie\Usuario;
 use App\Lib\Database;
 use App\Lib\Hash;
+use App\Lib\Comunes;
 use App\Http\Response;
 
 class UsuarioModel{
@@ -12,12 +13,14 @@ class UsuarioModel{
     private $table = 'users';
     private $response;
     private $usuario;
+    private $comunes;
     
     public function __CONSTRUCT()
     {
         $this->db = Database::StartUp();
         $this->response = new Response();
         $this->usuario = new Usuario();
+        $this->comunes = new Comunes();
     }
 
     public function GetAll()
@@ -59,6 +62,37 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
             $this->response->setStatus(200);
             $this->response->setBody($stm->fetchAll());
             $this->response->message=$this->response->getMessageForCode(200);
+            
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
+    public function GetForEmail($email)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT * from users where email_address=? and estado=1;");
+            $stm->execute(array($email));
+
+            $count = $stm->rowCount();
+
+            if ($count>0) {
+                $this->response->setStatus(200);
+                $this->response->setBody($stm->fetchAll());
+                $this->response->message=$this->response->getMessageForCode(200);
+            } else {
+                $this->response->setStatus(404);
+                $this->response->setBody($stm->fetchAll());
+                $this->response->message=$this->response->getMessageForCode(404);
+            }
+            
             
             return $this->response;
         }
@@ -236,6 +270,22 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
     }
 
 
+    public function RecoveryByEmail($data){
+        try{
+            if ($this->comunes->sendMail($data)==1) {
+                $this->response->setStatus(202);
+                $this->response->message=$this->response->getMessageForCode(202);   
+            }
+            else{
+                $this->response->setStatus(203);
+                $this->response->message=$this->response->getMessageForCode(203);   
+            }
+        } catch(Exception $e){
+            $this->response->setResponse(false, $e->getMenssage());
+        }
+        return $this->response;
+    }
+
     public function Login($data){
         try{
 
@@ -255,10 +305,6 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=? and
             $dataUser = $stm->fetchAll();
             $count = $stm->rowCount();
 
-            $this->response->setStatus(404);
-            $this->response->setBody($dataUser);
-            $this->response->message=$this->response->getMessageForCode(404);
-            $this->response->length($count);
 //Logica de AUtentificación y Autorización
             if ($count == 1) {
                 $this->response->setStatus(202);

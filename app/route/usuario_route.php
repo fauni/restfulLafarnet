@@ -30,6 +30,19 @@ $app->group('/usuario/', function () {
         );
     });
 
+    $this->get('getforemail/{email}', function ($req, $res, $args) {
+        $um = new UsuarioModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetForEmail($args['email'])
+            )
+        );
+    });
+
     $this->post('save', function ($req, $res) {
       $um = new UsuarioModel();
         
@@ -73,6 +86,22 @@ $app->group('/usuario/', function () {
               $um->GetApps(
                 $req->getParsedBody()
               )
+            )
+        );
+    });
+
+    $this->post('recovery', function ($req, $res) {
+        $um = new UsuarioModel();
+        //print_r ($req->getParsedBody());
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->RecoveryByEmail(
+                    $req->getParsedBody()
+                )
             )
         );
     });
