@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Entitie;
 
 class Publicacion {
@@ -21,7 +20,6 @@ class Publicacion {
     public function __construct() {
         //parent::__construct();
     }
-
 
     public function getId(){ return $this->id; }
     public function getTitulo(){ return $this->titulo; }
