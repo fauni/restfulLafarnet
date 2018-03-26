@@ -163,6 +163,50 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
         }
     }
 
+    public function updateImage($data){
+        try
+        {   
+            $tempPath = $_FILES['fileImagen']['tmp_name'];
+            $actualName = $_FILES['fileImagen']['name'];
+            $extension = $_FILES['fileImagen']['type'];
+            //$nuevo_nombre = $actualName;
+
+            $fileName = utf8_decode($_FILES['fileImagen']['name']);
+            $fileName = explode(".", $fileName);
+
+            $soloNombre = $fileName[0];
+            $ext = $fileName[1];
+
+            //$actualPath = dirname(__FILE__)."\\temp\\".$actualName;
+            $actualPath = "C:\\xampp\htdocs\\newApiLafarnet\\assets\\imagenes_users\\".$data['username'].'.'.$ext; // Ruta Xampp
+            //$actualPath = "/var/www/html/newApiLafarnet/assets/imagenes_users/".$data['foto']; // Ruta Server Centos
+            
+            if (move_uploaded_file($tempPath, $actualPath)) {
+                $stm = $this->db->prepare("UPDATE users set foto = ? where username= ?;");
+                $stm->execute(
+                    array(
+                        $data['username'].'.'.$ext, 
+                        $data['username'], 
+                    )
+                );
+                $this->response->setBody($data);
+                $this->response->setStatus(201);
+                $this->response->message=$this->response->getMessageForCode(201);
+
+            } else{
+                $this->response->setStatus(304);
+                $this->response->message=$this->response->getMessageForCode(304);
+            }
+            
+            return $this->response;
+
+        } catch(Exception $e){
+            $this->response->setStatus($e->getCode());
+            $this->response->message=$e->getMessage();
+            return $this->response;
+        }
+    }
+
     public function updateInformationGeneral($data){
         //print_r ($data);
         try
@@ -269,6 +313,30 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
         }
     }
 
+    public function changePasswordForUser($data){
+        try
+        {   
+            $stm = $this->db->prepare("UPDATE users SET password=?, estado=?, usuario_modificacion=?, fecha_modificacion=? WHERE username = ?");
+            $stm->execute(
+                array(
+                    Hash::create('sha256', $data['password'], 'n4d43sm4s1mp0rt4nt4qu3sus4lud'),
+                    1,
+                    $data['username'],
+                    date('Y-m-d H:i:s'),
+                    $data['username']
+                )
+            );
+
+            $this->response->setStatus(200);
+            $this->response->message=$this->response->getMessageForCode(200);
+            return $this->response;
+
+        } catch(Exception $e){
+            $this->response->setStatus($e->getCode());
+            $this->response->message=$e->getMessage();
+            return $this->response;
+        }
+    }
 
     public function RecoveryByEmail($data){
         try{

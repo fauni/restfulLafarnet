@@ -32,7 +32,7 @@ class Comunes
     <br /><br />
     Recibimos una solicitud para restaurar su contraseña de Lafarnet 2.0. <br />
     Para continuar, por favor haga click en el siguiente enlace:<br /><br />
-    <a href="http://intranet.lafar.net:8080/restorepass/'.$user['username'].'">Cambiar mi Contraseña</a><br /><br />
+    <a href="http://intranet.lafar.net:8080/#/restorepass/'.$user['username'].'">Cambiar mi Contraseña</a><br /><br />
     Si usted no solicito el cambio de contraseña, solo borre este correo.
     <br /><br />
     Atte,<br />

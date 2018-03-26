@@ -57,6 +57,20 @@ $app->group('/usuario/', function () {
             )
         );      
     });
+
+    $this->post('updateImage', function ($req, $res) {
+      $um = new UsuarioModel();  
+      return $res
+         ->withHeader('Content-type', 'application/json')
+         ->getBody()
+         ->write(
+          json_encode(
+              $um->updateImage(
+                  $req->getParsedBody()
+              )
+          )
+      );      
+    });
     
     $this->post('login', function ($req, $res) {
         $um = new UsuarioModel();
@@ -120,6 +134,20 @@ $app->group('/usuario/', function () {
       );      
     });
 
+    $this->put('changePasswordForUser', function ($req, $res) {
+      $um = new UsuarioModel();  
+      return $res
+         ->withHeader('Content-type', 'application/json')
+         ->getBody()
+         ->write(
+          json_encode(
+              $um->changePasswordForUser(
+                  $req->getParsedBody()
+              )
+          )
+      );      
+    });
+
     $this->put('updateInformationGeneral', function ($req, $res) {
       $um = new UsuarioModel();  
       return $res
@@ -147,6 +175,8 @@ $app->group('/usuario/', function () {
           )
       );      
     });
+
+    
 
     $this->put('delete', function ($req, $res) {
       $um = new UsuarioModel();  
