@@ -402,7 +402,7 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=? and
             $result = array();
 
             $stm = $this->db->prepare("SELECT a.appname, a.code,  a.url, a.appdescription, appicon from usersapps ua 
-                            inner join users u on u.userid=ua.userid inner join apps a on ua.appid= a.id where u.username = ?");
+                            inner join users u on u.userid=ua.userid inner join apps a on ua.appid= a.id where u.username = ? ORDER BY a.id DESC");
 
             $stm->execute(
                 array(
