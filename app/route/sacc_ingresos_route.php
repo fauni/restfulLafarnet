@@ -37,9 +37,8 @@ $app->group('/saccingresos/', function () {
         );
     });*/
 
-    /*$this->post('save', function ($req, $res) {
-        $um = new PublicacionModel();
-        
+    $this->post('save', function ($req, $res) {
+        $um = new SaccIngresosModel();
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -51,7 +50,7 @@ $app->group('/saccingresos/', function () {
             )
         );
     });
-
+/*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();
         
