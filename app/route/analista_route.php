@@ -24,8 +24,8 @@ $app->group('/analista/', function () {
         );
     });
     
-    /*$this->get('get/{id}', function ($req, $res, $args) {
-        $um = new AreaModel();
+    $this->get('get/{id}', function ($req, $res, $args) {
+        $um = new AnalistaModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -35,7 +35,7 @@ $app->group('/analista/', function () {
                 $um->Get($args['id'])
             )
         );
-    });*/
+    });
 
     $this->post('save', function ($req, $res) {
         $um = new AnalistaModel();
