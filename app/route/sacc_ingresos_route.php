@@ -24,8 +24,8 @@ $app->group('/saccingresos/', function () {
         );
     });
     
-    /*$this->get('get/{id}', function ($req, $res, $args) {
-        $um = new AreaModel();
+    $this->get('get/{id}', function ($req, $res, $args) {
+        $um = new SaccIngresosModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -35,7 +35,7 @@ $app->group('/saccingresos/', function () {
                 $um->Get($args['id'])
             )
         );
-    });*/
+    });
 
     $this->post('save', function ($req, $res) {
         $um = new SaccIngresosModel();

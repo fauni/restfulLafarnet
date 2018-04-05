@@ -39,15 +39,14 @@ class SaccIngresosModel
         }
     }
     
-    /*public function Get($id)
+    public function Get($id)
     {
 		try
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE id = ?");
+			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE id_ingreso = ?");
 			$stm->execute(array($id));
-
 			$this->response->setStatus(200);
 			$this->response->setBody($stm->fetchAll());
             $this->response->message=$this->response->getMessageForCode(200);
@@ -59,7 +58,7 @@ class SaccIngresosModel
 			$this->response->setResponse(false, $e->getMessage());
             return $this->response;
 		}
-    } */  
+    } 
 
     public function Insert($data){
         try
