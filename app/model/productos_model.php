@@ -1,39 +1,61 @@
 <?php
 namespace App\Model;
 
-use App\Lib\DatabaseMSS;
-use App\Lib\Response;
+use App\Lib\Database;
+use App\Http\Response;
 
 class ProductosModel
 {
     private $db;
-    private $table = 'apps';
+    private $table = 'productos';
     private $response;
     
     public function __CONSTRUCT()
     {
-        $this->db = DatabaseMSS::StartUp();
+        $this->db = Database::StartUp();
         $this->response = new Response();
     }
     
     public function GetAll()
     {
-		try
-		{
-			$result = array();
-			$sql= "SELECT T0.[ItemCode], T0.[ItemName], T0.[U_Presentacion], T1.Name as Forma_Farmaceutica FROM OITM T0 inner join [dbo].[@FORMA_FARMACEUTICA] T1 ON T0.U_FormaFarmaceutica=T1.Code WHERE T0.[ItemCode]='PT010005'";
-			$stm = mssql_query($sql);
+        try
+        {
+            $result = array();
 
+            $stm = $this->db->prepare("SELECT * FROM $this->table");
+            $stm->execute();
             
-			$this->response->setResponse(true);
-            $this->response->result = '';//$stm->fetchAll();
-            $this->response->message = $stm;//"Se obtuvieron ".$stm->rowCount()." registros";
+            $this->response->setStatus(200);
+            $this->response->setBody($stm->fetchAll());
+            $this->response->message=$this->response->getMessageForCode(200);
             return $this->response;
-		}
-		catch(Exception $e)
-		{
-			$this->response->setResponse(false, $e->getMessage());
+        }
+        catch(Exception $e)
+        {
+            $this->response->setStatus($e->getCode());
             return $this->response;
-		}
+        }
     }
+
+    public function GetClasificacionPT()
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT * FROM sacc_productos_clasificacion where tipo = 'PT'");
+            $stm->execute();
+            
+            $this->response->setStatus(200);
+            $this->response->setBody($stm->fetchAll());
+            $this->response->message=$this->response->getMessageForCode(200);
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setStatus($e->getCode());
+            return $this->response;
+        }
+    }
+    
 }

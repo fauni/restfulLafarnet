@@ -24,4 +24,17 @@ $app->group('/productos/', function () {
         );
     });
 
+    $this->get('clasificacionPT', function ($req, $res, $args) {
+        $um = new ProductosModel();
+        $this->logger->info("Consulta Clasificacion: ".$res); 
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetClasificacionPT()
+            )
+        );
+    });
+
 });
