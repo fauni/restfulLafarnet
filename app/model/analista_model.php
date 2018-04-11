@@ -20,10 +20,12 @@ class AnalistaModel
     
     public function GetAll()
     {
-		try
+        try
         {
             $result = array();
-            $stm = $this->db->prepare("SELECT a.codigo, a.username, a.grado, concat(u.first_name,' ',u.last_name) as nombre_completo, a.especialidad, a.id_firma from sacc_analistas a inner join users u on u.username = a.username;");
+
+            $stm = $this->db->prepare("SELECT a.codigo, a.username, a.grado, concat(u.first_name,' ',u.last_name) as nombre_completo, a.especialidad, a.id_firma 
+from sacc_analistas a inner join users u on u.username = a.username");
             $stm->execute();
             
             $this->response->setStatus(200);

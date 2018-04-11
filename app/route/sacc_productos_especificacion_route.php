@@ -1,10 +1,10 @@
 <?php
-use App\Model\AnalistaModel;
+use App\Model\SaccProductosEspecificacionModel;
 //use Slim\Http\UploadedFile;
 //use Slim\Http\Request;
 //use Slim\Http\Response;
 
-$app->group('/analista/', function () {
+$app->group('/saccproductosespecificacion/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
@@ -12,8 +12,8 @@ $app->group('/analista/', function () {
     });
     
     $this->get('get', function ($req, $res, $args) {
-        $um = new AnalistaModel();
-        
+        $um = new SaccProductosEspecificacionModel();
+        $this->logger->info("Consulta Especificacion de Productos: ".$res); 
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -25,7 +25,7 @@ $app->group('/analista/', function () {
     });
     
     $this->get('get/{id}', function ($req, $res, $args) {
-        $um = new AnalistaModel();
+        $um = new SaccProductosEspecificacionModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -37,8 +37,9 @@ $app->group('/analista/', function () {
         );
     });
 
+    /*
     $this->post('save', function ($req, $res) {
-        $um = new AnalistaModel();
+        $um = new SaccProductosEspecificacionModel();
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -49,7 +50,7 @@ $app->group('/analista/', function () {
                 )
             )
         );
-    });
+    });*/
 /*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();

@@ -1,10 +1,10 @@
 <?php
-use App\Model\AnalistaModel;
+use App\Model\SaccClasificacionCaracteristicasModel;
 //use Slim\Http\UploadedFile;
 //use Slim\Http\Request;
 //use Slim\Http\Response;
 
-$app->group('/analista/', function () {
+$app->group('/saccclasificacioncaracteristicas/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
@@ -12,8 +12,8 @@ $app->group('/analista/', function () {
     });
     
     $this->get('get', function ($req, $res, $args) {
-        $um = new AnalistaModel();
-        
+        $um = new SaccClasificacionCaracteristicasModel();
+        $this->logger->info("Consulta Especificacion de Características por Clasificación: ".$res); 
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -25,7 +25,7 @@ $app->group('/analista/', function () {
     });
     
     $this->get('get/{id}', function ($req, $res, $args) {
-        $um = new AnalistaModel();
+        $um = new SaccClasificacionCaracteristicasModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -37,8 +37,22 @@ $app->group('/analista/', function () {
         );
     });
 
+    $this->get('clasificacion/{id}', function ($req, $res, $args) {
+        $um = new SaccClasificacionCaracteristicasModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetClasificacionByNamePT($args['id'])
+            )
+        );
+    });
+
+    /*
     $this->post('save', function ($req, $res) {
-        $um = new AnalistaModel();
+        $um = new SaccProductosEspecificacionModel();
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -49,7 +63,7 @@ $app->group('/analista/', function () {
                 )
             )
         );
-    });
+    });*/
 /*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();

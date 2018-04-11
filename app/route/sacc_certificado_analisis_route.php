@@ -1,10 +1,10 @@
 <?php
-use App\Model\AnalistaModel;
+use App\Model\SaccCertificadoAnalisisModel;
 //use Slim\Http\UploadedFile;
 //use Slim\Http\Request;
 //use Slim\Http\Response;
 
-$app->group('/analista/', function () {
+$app->group('/sacccertificadoanalisis/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
@@ -12,8 +12,8 @@ $app->group('/analista/', function () {
     });
     
     $this->get('get', function ($req, $res, $args) {
-        $um = new AnalistaModel();
-        
+        $um = new SaccCertificadoAnalisisModel();
+        $this->logger->info("Consulta Especificacion de Certificado de Analisis: ".$res); 
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -23,9 +23,35 @@ $app->group('/analista/', function () {
             )
         );
     });
+
+    $this->get('pt', function ($req, $res, $args) {
+        $um = new SaccCertificadoAnalisisModel();
+        $this->logger->info("Consulta Especificacion de Certificado de Analisis PT: ".$res); 
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetAllPT()
+            )
+        );
+    });
+
+    $this->get('mp', function ($req, $res, $args) {
+        $um = new SaccCertificadoAnalisisModel();
+        $this->logger->info("Consulta Especificacion de Certificado de Analisis MP: ".$res); 
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetAllMP()
+            )
+        );
+    });
     
     $this->get('get/{id}', function ($req, $res, $args) {
-        $um = new AnalistaModel();
+        $um = new SaccCertificadoAnalisisModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -38,7 +64,7 @@ $app->group('/analista/', function () {
     });
 
     $this->post('save', function ($req, $res) {
-        $um = new AnalistaModel();
+        $um = new SaccCertificadoAnalisisModel();
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -50,6 +76,7 @@ $app->group('/analista/', function () {
             )
         );
     });
+    
 /*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();
