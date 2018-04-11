@@ -11,6 +11,18 @@ $app->group('/clasificacion_caracteristica/', function () {
                    ->write('Hola Users');
     });
     
+    $this->get('GetAlljoinCFAQCM', function ($req, $res, $args) {
+        $um = new ClasificacionCaracteristicaModel();
+        $this->logger->info("Consulta clasificacion de productos: ".$res); 
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetAlljoinCFAQCM()
+            )
+        );
+    });
     $this->get('getbytipoclas/{id}', function ($req, $res, $args) {
         $um = new ClasificacionCaracteristicaModel();
         $this->logger->info("Consulta clasificacion de productos: ".$res); 
