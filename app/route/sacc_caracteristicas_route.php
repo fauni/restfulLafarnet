@@ -8,7 +8,7 @@ $app->group('/caracteristicas/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
-                   ->write('Hola Users');
+                   ->write('Hola Users como estas');
     });
     
     $this->get('getMP', function ($req, $res, $args) {
@@ -23,6 +23,7 @@ $app->group('/caracteristicas/', function () {
             )
         );
     }); 
+
     $this->get('getPT', function ($req, $res, $args) {
         $um = new CaracteristicasModel();
         $this->logger->info("Consulta Analistas: ".$res); 
