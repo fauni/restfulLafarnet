@@ -17,6 +17,7 @@ class DatabaseMSS
         $DB_user = "lafaradmDB";
         $DB_pass = "";
         $DB_name = "newlafarnet";*/
+
         $conn = mssql_connect("192.168.1.230", "sa", "B1Admin");
         if (!$conn)
         { 
