@@ -23,13 +23,13 @@ class CaracteristicasModel
         try
         {
             $result = array();
-            $stm = $this->db->prepare("select  *, 'CF' as esp_car from sacc_productos_caracteristicas_fisicas 
+            $stm = $this->db->prepare("select  *, 'CF' as esp_car, false as checkeado from sacc_productos_caracteristicas_fisicas 
                                         where tipo = 1
                                         union
-                                        select *, 'AQ' as esp_car from sacc_productos_analisis_quimico
+                                        select *, 'AQ' as esp_car, false as checkeado from sacc_productos_analisis_quimico
                                         where tipo = 1
                                         union
-                                        select *, 'CM' as esp_car from sacc_productos_analisis_microbiologico 
+                                        select *, 'CM' as esp_car, false as checkeado from sacc_productos_analisis_microbiologico 
                                         where tipo = 1 ;");
             $stm->execute();
             
@@ -49,13 +49,13 @@ class CaracteristicasModel
         try
         {
             $result = array();
-            $stm = $this->db->prepare("select  *, 'CF' as esp_car from sacc_productos_caracteristicas_fisicas 
+            $stm = $this->db->prepare("select  *, 'CF' as esp_car, false as checkeado from sacc_productos_caracteristicas_fisicas 
                                         where tipo = 2
                                         union
-                                        select *, 'AQ' as esp_car from sacc_productos_analisis_quimico
+                                        select *, 'AQ' as esp_car, false as checkeado from sacc_productos_analisis_quimico
                                         where tipo = 2
                                         union
-                                        select *, 'CM' as esp_car from sacc_productos_analisis_microbiologico 
+                                        select *, 'CM' as esp_car, false as checkeado from sacc_productos_analisis_microbiologico 
                                         where tipo = 2;");
             $stm->execute();
             
