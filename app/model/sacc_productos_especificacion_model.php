@@ -24,7 +24,7 @@ class SaccProductosEspecificacionModel
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table order by codigo_producto fecha desc");
+            $stm = $this->db->prepare("SELECT * FROM $this->table order by codigo_producto desc");
             $stm->execute();
             
             $this->response->setStatus(200);
@@ -45,17 +45,17 @@ class SaccProductosEspecificacionModel
 		{
 			$result = array();
 
-			$stm = $this->db->prepare("SELECT pe.codigo_producto as 'codigo', pe.id_caracteristica, cf.descripcion, pe.especificacion, pe.tipo_caracteristica from sacc_productos_especificacion pe
-inner join sacc_productos_caracteristicas_fisicas cf on pe.id_caracteristica= cf.id_caracteristicas_fisicas
-where pe.codigo_producto = ? and pe.tipo_caracteristica='CF'
-union
-select pe.codigo_producto as 'codigo', pe.id_caracteristica, cf.descripcion, pe.especificacion, pe.tipo_caracteristica from sacc_productos_especificacion pe
-inner join sacc_productos_analisis_quimico cf on pe.id_caracteristica= cf.id_analisis_quimico
-where pe.codigo_producto = ? and pe.tipo_caracteristica='AQ'
-union
-select pe.codigo_producto as 'codigo', pe.id_caracteristica, cf.descripcion, pe.especificacion, pe.tipo_caracteristica from sacc_productos_especificacion pe
-inner join sacc_productos_analisis_microbiologico cf on pe.id_caracteristica= cf.id_analisis_microbiologico
-where pe.codigo_producto = ? and pe.tipo_caracteristica='CM';");
+			$stm = $this->db->prepare("SELECT pe.codigo_producto as 'codigo', pe.id_caracteristica, cf.descripcion, pe.especificacion, pe.tipo_caracteristica, cf.estado from sacc_productos_especificacion pe
+            inner join sacc_productos_caracteristicas_fisicas cf on pe.id_caracteristica= cf.id_caracteristicas_fisicas
+            where pe.codigo_producto = ? and pe.tipo_caracteristica='CF'
+            union
+            select pe.codigo_producto as 'codigo', pe.id_caracteristica, cf.descripcion, pe.especificacion, pe.tipo_caracteristica, cf.estado from sacc_productos_especificacion pe
+            inner join sacc_productos_analisis_quimico cf on pe.id_caracteristica= cf.id_analisis_quimico
+            where pe.codigo_producto = ? and pe.tipo_caracteristica='AQ'
+            union
+            select pe.codigo_producto as 'codigo', pe.id_caracteristica, cf.descripcion, pe.especificacion, pe.tipo_caracteristica, cf.estado from sacc_productos_especificacion pe
+            inner join sacc_productos_analisis_microbiologico cf on pe.id_caracteristica= cf.id_analisis_microbiologico
+            where pe.codigo_producto = ? and pe.tipo_caracteristica='CM';");
 			$stm->execute(array($id, $id, $id));
 			$this->response->setStatus(200);
 			$this->response->setBody($stm->fetchAll());
@@ -70,18 +70,20 @@ where pe.codigo_producto = ? and pe.tipo_caracteristica='CM';");
 		}
     } 
 
-    /*public function Insert($data){
+    public function Insert($data){
         try
         {   
-        	$stm = $this->db->prepare("INSERT INTO sacc_ingresos (codigo, fecha, glosa, id_proveedor, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion) VALUES (?,?,?,?,?,?,?,?);");
+        	$stm = $this->db->prepare("INSERT INTO sacc_productos_especificacion (codigo_producto, id_caracteristica, especificacion, estado, tipo_caracteristica, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
+                VALUES (?,?,?,?,?,?,?,?,?);");
             $stm->execute(array(
-                $data['codigo'], 
-                $data['fecha'], 
-                $data['glosa'], 
-                $data['id_proveedor'],
-                $data['usuario_modificacion'],
-                date('Y-m-d H:i:s'),
+                $data['codigo_producto'], 
+                $data['id_caracteristica'], 
+                $data['especificacion'], 
+                $data['estado'],
+                $data['tipo_caracteristica'],
                 $data['usuario_creacion'],
+                date('Y-m-d H:i:s'),
+                $data['usuario_modificacion'],
                 date('Y-m-d H:i:s')
             ));
             $this->response->setBody($data);
@@ -95,5 +97,5 @@ where pe.codigo_producto = ? and pe.tipo_caracteristica='CM';");
             $this->response->message=$e->getMessage();
             return $this->response;
         }
-    }*/
+    }
 }

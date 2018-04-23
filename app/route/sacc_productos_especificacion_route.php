@@ -37,7 +37,7 @@ $app->group('/saccproductosespecificacion/', function () {
         );
     });
 
-    /*
+    
     $this->post('save', function ($req, $res) {
         $um = new SaccProductosEspecificacionModel();
         return $res
@@ -50,7 +50,7 @@ $app->group('/saccproductosespecificacion/', function () {
                 )
             )
         );
-    });*/
+    });
 /*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();

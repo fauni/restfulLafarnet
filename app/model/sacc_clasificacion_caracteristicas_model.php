@@ -44,17 +44,17 @@ class SaccClasificacionCaracteristicasModel
 		try
 		{
 			$result = array();
-			$stm = $this->db->prepare("SELECT cc.id_tipo_clasificacion as 'codigo', cf.id_caracteristicas_fisicas as 'id_caracteristica', cf.descripcion,'' as 'especificacion', cc.tipo_caracteristica from sacc_clasificacion_caracteristicas cc 
-inner join sacc_productos_caracteristicas_fisicas cf on cc.id_caracteristica= cf.id_caracteristicas_fisicas
-where cc.id_tipo_clasificacion=? and cc.tipo_caracteristica='CF'
-union
-select cc.id_tipo_clasificacion as 'codigo', cf.id_analisis_quimico as 'id_caracteristica', cf.descripcion,'' as 'especificacion', cc.tipo_caracteristica from sacc_clasificacion_caracteristicas cc 
-inner join sacc_productos_analisis_quimico cf on cc.id_caracteristica= cf.id_analisis_quimico
-where cc.id_tipo_clasificacion=? and cc.tipo_caracteristica='AQ'
-union
-select cc.id_tipo_clasificacion as 'codigo', cf.id_analisis_microbiologico as 'id_caracteristica', cf.descripcion,'' as 'especificacion', cc.tipo_caracteristica from sacc_clasificacion_caracteristicas cc 
-inner join sacc_productos_analisis_microbiologico cf on cc.id_caracteristica= cf.id_analisis_microbiologico
-where cc.id_tipo_clasificacion=? and cc.tipo_caracteristica='CM';
+			$stm = $this->db->prepare("SELECT cc.id_tipo_clasificacion as 'codigo', cf.id_caracteristicas_fisicas as 'id_caracteristica', cf.descripcion,'' as 'especificacion', cc.tipo_caracteristica, cf.estado from sacc_clasificacion_caracteristicas cc 
+            inner join sacc_productos_caracteristicas_fisicas cf on cc.id_caracteristica= cf.id_caracteristicas_fisicas
+            where cc.id_tipo_clasificacion=? and cc.tipo_caracteristica='CF'
+            union
+            select cc.id_tipo_clasificacion as 'codigo', cf.id_analisis_quimico as 'id_caracteristica', cf.descripcion,'' as 'especificacion', cc.tipo_caracteristica, cf.estado from sacc_clasificacion_caracteristicas cc 
+            inner join sacc_productos_analisis_quimico cf on cc.id_caracteristica= cf.id_analisis_quimico
+            where cc.id_tipo_clasificacion=? and cc.tipo_caracteristica='AQ'
+            union
+            select cc.id_tipo_clasificacion as 'codigo', cf.id_analisis_microbiologico as 'id_caracteristica', cf.descripcion,'' as 'especificacion', cc.tipo_caracteristica , cf.estado from sacc_clasificacion_caracteristicas cc 
+            inner join sacc_productos_analisis_microbiologico cf on cc.id_caracteristica= cf.id_analisis_microbiologico
+            where cc.id_tipo_clasificacion=? and cc.tipo_caracteristica='CM';
 ");
 			$stm->execute(array($id, $id, $id));
 			$this->response->setStatus(200);
