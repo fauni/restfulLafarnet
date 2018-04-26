@@ -50,9 +50,8 @@ $app->group('/saccclasificacioncaracteristicas/', function () {
         );
     });
 
-    /*
-    $this->post('save', function ($req, $res) {
-        $um = new SaccProductosEspecificacionModel();
+     $this->post('save', function ($req, $res) {
+        $um = new SaccClasificacionCaracteristicasModel();
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -63,23 +62,23 @@ $app->group('/saccclasificacioncaracteristicas/', function () {
                 )
             )
         );
-    });*/
-/*
+    });
+
     $this->put('edit', function ($req, $res) {
-        $um = new PublicacionModel();
+        $um = new SaccClasificacionCaracteristicasModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $um->Update(
+                $um->update(
                     $req->getParsedBody()
                 )
            )
         );
     });
-
+/*
     $this->delete('delete/{id}', function ($req, $res, $args) {
         $um = new PublicacionModel();
         

@@ -25,7 +25,7 @@ class ClasificacionCaracteristicaModel
             $result = array();
 
             $stm = $this->db->prepare("SELECT * FROM sacc_clasificacion_caracteristicas
-                                        WHERE id_tipo_clasificacion = ? ;");
+                                        WHERE id_tipo_clasificacion = ?;");
             $stm->execute(array($id));
             $this->response->setStatus(200);
             $this->response->setBody($stm->fetchAll());

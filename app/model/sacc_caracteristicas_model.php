@@ -24,13 +24,13 @@ class CaracteristicasModel
         {
             $result = array();
             $stm = $this->db->prepare("select  *, 'CF' as esp_car, false as checkeado from sacc_productos_caracteristicas_fisicas 
-                                        where tipo = 1
+                                        where tipo = 1 and estado = 1 
                                         union
                                         select *, 'AQ' as esp_car, false as checkeado from sacc_productos_analisis_quimico
-                                        where tipo = 1
+                                        where tipo = 1 and estado = 1
                                         union
                                         select *, 'CM' as esp_car, false as checkeado from sacc_productos_analisis_microbiologico 
-                                        where tipo = 1 ;");
+                                        where tipo = 1 and estado = 1;");
             $stm->execute();
             
             $this->response->setStatus(200);
@@ -50,13 +50,13 @@ class CaracteristicasModel
         {
             $result = array();
             $stm = $this->db->prepare("select  *, 'CF' as esp_car, false as checkeado from sacc_productos_caracteristicas_fisicas 
-                                        where tipo = 2
+                                        where tipo = 2 and estado = 1
                                         union
                                         select *, 'AQ' as esp_car, false as checkeado from sacc_productos_analisis_quimico
-                                        where tipo = 2
+                                        where tipo = 2 and estado = 1
                                         union
                                         select *, 'CM' as esp_car, false as checkeado from sacc_productos_analisis_microbiologico 
-                                        where tipo = 2;");
+                                        where tipo = 2 and estado = 1;");
             $stm->execute();
             
             $this->response->setStatus(200);
