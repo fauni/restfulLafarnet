@@ -51,6 +51,66 @@ $app->group('/saccproductosespecificacion/', function () {
             )
         );
     });
+
+    $this->post('existe', function ($req, $res) {
+        $um = new SaccProductosEspecificacionModel();
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Existe(
+                    $req->getParsedBody()
+                )
+            )
+        );
+    });
+
+    $this->put('edit', function ($req, $res) {
+        $um = new SaccProductosEspecificacionModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Update(
+                    $req->getParsedBody()
+                )
+           )
+        );
+    });
+
+    $this->put('editEspecificacion', function ($req, $res) {
+        $um = new SaccProductosEspecificacionModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->UpdateEspecificacion(
+                    $req->getParsedBody()
+                )
+           )
+        );
+    });
+
+    $this->put('changeAllEstados', function ($req, $res) {
+        $um = new SaccProductosEspecificacionModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->UpdateAllEstadosCaracteristicasProducto(
+                    $req->getParsedBody()
+                )
+           )
+        );
+    });
+    
 /*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();

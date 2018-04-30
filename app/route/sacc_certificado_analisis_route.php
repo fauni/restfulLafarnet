@@ -63,6 +63,58 @@ $app->group('/sacccertificadoanalisis/', function () {
         );
     });
 
+    $this->get('getl/{id}', function ($req, $res, $args) {
+        $um = new SaccCertificadoAnalisisModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetPorLote($args['id'])
+            )
+        );
+    });
+    
+    $this->get('getCF/{id}', function ($req, $res, $args) {
+        $um = new SaccCertificadoAnalisisModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetCF($args['id'])
+            )
+        );
+    });
+
+    $this->get('getAQ/{id}', function ($req, $res, $args) {
+        $um = new SaccCertificadoAnalisisModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetAQ($args['id'])
+            )
+        );
+    });
+
+    $this->get('getCM/{id}', function ($req, $res, $args) {
+        $um = new SaccCertificadoAnalisisModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetCM($args['id'])
+            )
+        );
+    });
+    
     $this->post('save', function ($req, $res) {
         $um = new SaccCertificadoAnalisisModel();
         return $res
@@ -77,6 +129,19 @@ $app->group('/sacccertificadoanalisis/', function () {
         );
     });
     
+    $this->post('savec', function ($req, $res) {
+        $um = new SaccCertificadoAnalisisModel();
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->InsertCaracteristica(
+                    $req->getParsedBody()
+                )
+            )
+        );
+    });
 /*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();
