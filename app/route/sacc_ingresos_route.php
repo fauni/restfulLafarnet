@@ -38,7 +38,7 @@ $app->group('/saccingresos/', function () {
     });
 
     $this->post('save', function ($req, $res) {
-        $um = new SaccIngresosModel();
+        $um = new CaracteristicasModel();
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()

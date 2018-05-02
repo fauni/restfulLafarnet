@@ -36,4 +36,17 @@ $app->group('/caracteristicas/', function () {
             )
         );
     });  
+    $this->post('save', function ($req, $res) {
+        $um = new CaracteristicasModel();
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->Insert(
+                    $req->getParsedBody()
+                )
+            )
+        );
+    });
 });

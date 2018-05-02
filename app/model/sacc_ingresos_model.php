@@ -69,9 +69,9 @@ class SaccIngresosModel
                 $data['fecha'], 
                 $data['glosa'], 
                 $data['id_proveedor'],
-                $data['usuario_modificacion'],
-                date('Y-m-d H:i:s'),
                 $data['usuario_creacion'],
+                date('Y-m-d H:i:s'),
+                $data['usuario_modificacion'],
                 date('Y-m-d H:i:s')
             ));
             $this->response->setBody($data);
