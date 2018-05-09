@@ -145,6 +145,27 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
                         date('Y-m-d H:i:s')
                     )
                 );
+
+                $stm2 = $this->db->prepare("INSERT INTO lafarnet.users (first_name, last_name, email_address, position, department, username, password, last_loggedin, user_level, nivel, forgot, status, id_regional, nivel_permisos, id_superior, estado_user) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+                $stm2->execute(
+                       array( $data['first_name'], 
+                        $data['last_name'], 
+                        $data['email_address'], 
+                        $data['id_cargo'],
+                        $data['id_area']."-".$data['id_seccion'],
+                        $data['username'],
+                        Hash::create('sha256', $data['password'], 'n4d43sm4s1mp0rt4nt4qu3sus4lud'),
+                        'never',
+                        '1',
+                        '1',
+                        '',
+                        'live',
+                        $data['id_regional'],
+                        '1',
+                        $data['id_superior'],
+                        $data['estado']    
+                    )
+                );
                 $this->response->setBody($data);
                 $this->response->setStatus(201);
                 $this->response->message=$this->response->getMessageForCode(201);
