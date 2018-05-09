@@ -191,6 +191,22 @@ $app->group('/usuario/', function () {
           )
       );      
     });
+
+    // resetear el password de usuario
+
+    $this->put('resetPassword', function ($req, $res) {
+      $um = new UsuarioModel();  
+      return $res
+         ->withHeader('Content-type', 'application/json')
+         ->getBody()
+         ->write(
+          json_encode(
+              $um->resetPassword(
+                  $req->getParsedBody()
+              )
+          )
+      );      
+    });
 });
 
 

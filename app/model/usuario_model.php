@@ -421,5 +421,30 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=? and
             return $this->response;
         }
     }
+    // reseteando el password asignandole uno por defecto 
+    public function resetPassword($data){
+        try
+        {   
+            $stm = $this->db->prepare("UPDATE users SET password=?, estado=?, usuario_modificacion=?, fecha_modificacion=? WHERE username = ?");
+            $stm->execute(
+                array(
+                    Hash::create('sha256', 'usuario2018', 'n4d43sm4s1mp0rt4nt4qu3sus4lud'),
+                    4,
+                    $data['usernameUpdate'],
+                    date('Y-m-d H:i:s'),
+                    $data['username']
+                )
+            );
+            $this->response->body =$data;
+            $this->response->setStatus(200);
+            $this->response->message=$this->response->getMessageForCode(200);
+            return $this->response;
+
+        } catch(Exception $e){
+            $this->response->setStatus($e->getCode());
+            $this->response->message=$e->getMessage();
+            return $this->response;
+        }
+    }
 }
 ?>
