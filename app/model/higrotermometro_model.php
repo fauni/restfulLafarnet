@@ -1,15 +1,12 @@
 <?php
 namespace App\Model;
-
-use App\Entitie\Area;
 use App\Lib\Database;
-use App\Lib\Hash;
 use App\Http\Response;
 
-class AreaModel
+class HigrotermometroModel
 {
     private $db;
-    private $table = 'areas';
+    private $table = 'higrotermometro';
     private $response;
     
     public function __CONSTRUCT()
@@ -20,11 +17,11 @@ class AreaModel
     
     public function GetAll()
     {
-		try
+        try
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table order by nombre asc");
+            $stm = $this->db->prepare("SELECT * from higrotermometro");
             $stm->execute();
             
             $this->response->setStatus(200);
@@ -38,35 +35,13 @@ class AreaModel
             return $this->response;
         }
     }
-
-    public function GetAllProd()
-    {
-		try
-        {
-            $result = array();
-        
-            $stm = $this->db->prepare("SELECT * FROM $this->table WHERE id_super_area=1 ORDER BY nombre asc");
-            $stm->execute();
-            
-            $this->response->setStatus(200);
-            $this->response->setBody($stm->fetchAll());
-            $this->response->message=$this->response->getMessageForCode(200);
-            return $this->response;
-        }
-        catch(Exception $e)
-        {
-            $this->response->setStatus($e->getCode());
-            return $this->response;
-        }
-    }
-
+    
     public function Get($id)
     {
 		try
 		{
 			$result = array();
-
-			$stm = $this->db->prepare("SELECT * FROM $this->table WHERE id = ?");
+			$stm = $this->db->prepare("SELECT * from higrotermometro where id_seccion=?");
 			$stm->execute(array($id));
 
 			$this->response->setStatus(200);
@@ -80,6 +55,6 @@ class AreaModel
 			$this->response->setResponse(false, $e->getMessage());
             return $this->response;
 		}
-    }   
+    }
 
 }

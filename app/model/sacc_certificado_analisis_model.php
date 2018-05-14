@@ -45,7 +45,7 @@ class SaccCertificadoAnalisisModel
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table WHERE tipo_certificado= 'PT' order by fecha_analisis desc");
+            $stm = $this->db->prepare("SELECT * FROM $this->table order by fecha_analisis desc");
             $stm->execute();
             
             $this->response->setStatus(200);
@@ -202,9 +202,11 @@ class SaccCertificadoAnalisisModel
         try
         {   
             $stm = $this->db->prepare("INSERT INTO sacc_certificado_analisis (codigo_certificado, codigo_analista, 
-            protocolo, fecha_analisis, lote, fecha_fabricacion, fecha_vencimiento, cantidad_fabricada, 
-            cantidad_liberada, tipo_certificado, tipo_clasificacion_producto, codigo_producto, dictamen, observaciones, tipo_impresion, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+            protocolo, fecha_analisis, lote, fecha_fabricacion, fecha_vencimiento, cantidad_fabricada, cantidad_liberada, 
+            tipo_certificado, tipo_clasificacion_producto, codigo_producto, dictamen, observaciones, tipo_impresion, 
+            nombre_producto, concentracion, forma_farmaceutica, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+");
             $stm->execute(array(
                 $data['codigo_certificado'],
                 $data['codigo_analista'],
@@ -221,6 +223,9 @@ class SaccCertificadoAnalisisModel
                 $data['dictamen'],
                 $data['observaciones'],
                 $data['tipo_impresion'],
+                $data['nombre_producto'],
+                $data['concentracion'],
+                $data['forma_farmaceutica'],
                 $data['usuario_modificacion'],
                 date('Y-m-d H:i:s'),
                 $data['usuario_creacion'],

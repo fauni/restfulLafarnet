@@ -1,10 +1,10 @@
 <?php
-use App\Model\AreaModel;
+use App\Model\HigrotermometroModel;
 //use Slim\Http\UploadedFile;
 //use Slim\Http\Request;
 //use Slim\Http\Response;
 
-$app->group('/area/', function () {
+$app->group('/higrotermometro/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
@@ -12,8 +12,7 @@ $app->group('/area/', function () {
     });
     
     $this->get('get', function ($req, $res, $args) {
-        $um = new AreaModel();
-        $this->logger->info("Consulta Area: ".$res); 
+        $um = new HigrotermometroModel();
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -23,22 +22,9 @@ $app->group('/area/', function () {
             )
         );
     });
-
-    $this->get('getprod', function ($req, $res, $args) {
-        $um = new AreaModel();
-        $this->logger->info("Consulta Areas Productivas: ".$res); 
-        return $res
-           ->withHeader('Content-type', 'application/json')
-           ->getBody()
-           ->write(
-            json_encode(
-                $um->GetAllProd()
-            )
-        );
-    });
     
     $this->get('get/{id}', function ($req, $res, $args) {
-        $um = new AreaModel();
+        $um = new HigrotermometroModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -50,21 +36,8 @@ $app->group('/area/', function () {
         );
     });
 
-    $this->post('save', function ($req, $res) {
-        $um = new PublicacionModel();
-        
-        return $res
-           ->withHeader('Content-type', 'application/json')
-           ->getBody()
-           ->write(
-            json_encode(
-                $um->Insert(
-                    $req->getParsedBody()
-                )
-            )
-        );
-    });
-
+    
+/*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();
         
@@ -91,6 +64,5 @@ $app->group('/area/', function () {
                 $um->Delete($args['id'])
             )
         );
-    });
-
+    });*/
 });
