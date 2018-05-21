@@ -50,6 +50,19 @@ $app->group('/saccclasificacioncaracteristicas/', function () {
         );
     });
 
+    $this->get('clasificacionmp/{id}', function ($req, $res, $args) {
+        $um = new SaccClasificacionCaracteristicasModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetClasificacionByNameMP($args['id'])
+            )
+        );
+    });
+
      $this->post('save', function ($req, $res) {
         $um = new SaccClasificacionCaracteristicasModel();
         return $res

@@ -26,7 +26,7 @@ $app->group('/productos/', function () {
 
     $this->get('clasificacionPT', function ($req, $res, $args) {
         $um = new ProductosModel();
-        $this->logger->info("Consulta Clasificacion: ".$res); 
+        $this->logger->info("Consulta Clasificacion PT: ".$res); 
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -37,4 +37,16 @@ $app->group('/productos/', function () {
         );
     });
 
+    $this->get('clasificacionMP', function ($req, $res, $args) {
+        $um = new ProductosModel();
+        $this->logger->info("Consulta Clasificacion MP: ".$res); 
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetClasificacionMP()
+            )
+        );
+    });
 });
