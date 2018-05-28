@@ -145,7 +145,7 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
                         date('Y-m-d H:i:s')
                     )
                 );
-
+                    // insercion en la base de datos antigua
                 $stm2 = $this->db->prepare("INSERT INTO lafarnet.users (first_name, last_name, email_address, position, department, username, password, last_loggedin, user_level, nivel, forgot, status, id_regional, nivel_permisos, id_superior, estado_user) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
                 $stm2->execute(
                        array( $data['first_name'], 
@@ -166,6 +166,21 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
                         $data['estado']    
                     )
                 );
+                // insercion de usuario en la base de datos lafardocs
+                 $stm3 = $this->db->prepare("INSERT INTO lafardocs.users (usrname, usrpass,role, phone, cellphone, email, lastname, name) VALUES (?,?,?,?,?,?,?,?);");
+                $stm3->execute(
+                       array( $data['username'], 
+                        Hash::create('sha256', $data['password'], 'n4d43sm4s1mp0rt4nt4qu3sus4lud'),
+                        '1',
+                        '' ,
+                        '' ,
+                        $data['email_address'], 
+                        $data['last_name'],
+                        $data['first_name']
+                    )
+                );
+
+
                 $this->response->setBody($data);
                 $this->response->setStatus(201);
                 $this->response->message=$this->response->getMessageForCode(201);
