@@ -63,6 +63,30 @@ from sacc_analistas a inner join users u on u.username = a.username where a.codi
 		}
     }
 
+    // obtener analista a partir del username
+    public function GetByUsnm($id)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT a.codigo, a.username, a.grado, concat(u.first_name,' ',u.last_name) as nombre_completo, a.especialidad, a.id_firma, a.rol 
+from sacc_analistas a inner join users u on u.username = a.username where a.username= ?");
+            $stm->execute(array($id));
+
+            $this->response->setStatus(200);
+            $this->response->setBody($stm->fetchAll());
+            $this->response->message=$this->response->getMessageForCode(200);
+            
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
     public function Insert($data){
         try
         {   

@@ -37,6 +37,19 @@ $app->group('/analista/', function () {
         );
     });
 
+    $this->get('getbyusrnm/{id}', function ($req, $res, $args) {
+        $um = new AnalistaModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetByUsnm($args['id'])
+            )
+        );
+    });
+
     $this->post('save', function ($req, $res) {
         $um = new AnalistaModel();
         return $res
