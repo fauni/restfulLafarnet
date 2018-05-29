@@ -30,9 +30,34 @@ class UsuarioModel{
             $result = array();
 
             $stm = $this->db->prepare("SELECT u.first_name, u.last_name, u.email_address, u.username, u.password, u.id_cargo, c.nombre_cargo as cargo, 
-u.id_regional, r.nombre as regional, u.id_grupo, u.id_area, a.nombre as area, u.foto, u.estado, e.nombre_estado
-from users u inner join cargos c on u.id_cargo= c.id inner join regional r on u.id_regional=r.id inner join areas a 
-on u.id_area=a.id inner join estados e on u.estado = e.id");
+            u.id_regional, r.nombre as regional, u.id_grupo, u.id_area, a.nombre as area, u.foto, u.estado, e.nombre_estado, sar.id_super_area
+            from users u inner join cargos c on u.id_cargo= c.id inner join regional r on u.id_regional=r.id inner join areas a 
+            on u.id_area=a.id inner join estados e on u.estado = e.id inner join super_area sar on sar.id_super_area = u.id_super_area");
+            $stm->execute();
+            
+            $this->response->setStatus(200);
+            $this->response->setBody($stm->fetchAll());
+            $this->response->message=$this->response->getMessageForCode(200);
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setStatus($e->getCode());
+            return $this->response;
+        }
+    }
+
+    public function GetCompleter()
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT u.first_name, u.last_name, concat(u.first_name,' ', u.last_name) as 'email_address', u.username, u.password, u.id_cargo, c.nombre_cargo as cargo, 
+            u.id_regional, r.nombre as regional, u.id_grupo, u.id_area, a.nombre as area, u.foto, u.estado, e.nombre_estado
+            from users u inner join cargos c on u.id_cargo= c.id inner join regional r on u.id_regional=r.id inner join areas a 
+            on u.id_area=a.id inner join estados e on u.estado = e.id");
+            
             $stm->execute();
             
             $this->response->setStatus(200);
@@ -54,9 +79,9 @@ on u.id_area=a.id inner join estados e on u.estado = e.id");
             $result = array();
 
             $stm = $this->db->prepare("SELECT u.userid,u.first_name, u.last_name, u.email_address, u.username, u.password, u.id_cargo, c.nombre_cargo as cargo, 
-u.id_regional, r.nombre as regional, u.id_grupo, u.id_area, a.nombre as area, u.foto, u.estado, e.nombre_estado
-from users u inner join cargos c on u.id_cargo= c.id inner join regional r on u.id_regional=r.id inner join areas a 
-on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
+            u.id_regional, r.nombre as regional, u.id_grupo, u.id_area, a.nombre as area, u.foto, u.estado, e.nombre_estado, u.id_superior, sar.id_super_area
+            from users u inner join cargos c on u.id_cargo= c.id inner join regional r on u.id_regional=r.id inner join areas a 
+            on u.id_area=a.id inner join estados e on u.estado = e.id inner join super_area sar on sar.id_super_area = u.id_super_area where u.username=?");
             $stm->execute(array($username));
 
             $this->response->setStatus(200);
@@ -163,7 +188,7 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
                         $data['id_regional'],
                         '1',
                         $data['id_superior'],
-                        $data['estado']    
+                        '1'    
                     )
                 );
                 $this->response->setBody($data);
@@ -308,11 +333,90 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
             return $this->response;
         }
     }
+    
+    public function updateSuperiorForUser($data){
+        //print_r ($data);
+        try
+        {
+            $stm = $this->db->prepare("UPDATE newlafarnet.users SET id_superior=?, usuario_modificacion=?, fecha_modificacion=? WHERE username=?");
+            $stm->execute(
+                array(
+                    $data['id_superior'],
+                    $data['usuario_modificacion'],
+                    date('Y-m-d H:i:s'),
+                    $data['username']
+                )
+            );
 
+            $stm2 = $this->db->prepare("UPDATE lafarnet.users T0, (select * from lafarnet.users where username = ?) T1
+                    set T0.id_superior = T1.userid
+                    WHERE T0.username=?;");
+            $stm2->execute(
+                array(
+                    $data['id_superior'],
+                    $data['username']
+                )
+            );
+
+            $stm3 = $this->db->prepare("INSERT into lafarnet.user_super_area (userid, id_super_area)
+            select userid, 6 from lafarnet.users u where username = ?");
+            $stm3->execute(
+                array(
+                    $data['username']
+                )
+            );
+
+            //print_r($stm);
+
+            $this->response->setStatus(200);
+            $this->response->message=$this->response->getMessageForCode(200);
+            return $this->response;
+
+        } catch(Exception $e){
+            $this->response->setStatus($e->getCode());
+            $this->response->message=$e->getMessage();
+            return $this->response;
+        }
+    }
+
+    public function updateSuperAreaForUser($data){
+        try
+        {
+            $stm = $this->db->prepare("UPDATE newlafarnet.users SET id_super_area = ?, usuario_modificacion=?, fecha_modificacion=? WHERE username=?");
+            $stm->execute(
+                array(
+                    $data['id_super_area'],
+                    $data['usuario_modificacion'],
+                    date('Y-m-d H:i:s'),
+                    $data['username']
+                )
+            );
+
+            $stm2 = $this->db->prepare("UPDATE lafarnet.user_super_area T0, (select * from lafarnet.users where username = ?) T1
+            set T0.id_super_area = ?
+            WHERE T0.userid = T1.userid;");
+            $stm2->execute(
+                array(
+                    $data['username'],
+                    $data['id_super_area']
+                )
+            );
+
+            $this->response->setStatus(200);
+            $this->response->message=$this->response->getMessageForCode(200);
+            return $this->response;
+
+        } catch(Exception $e){
+            $this->response->setStatus($e->getCode());
+            $this->response->message=$e->getMessage();
+            return $this->response;
+        }
+    }
+    
     public function changePassword($data){
         try
         {   
-            $stm = $this->db->prepare("UPDATE users SET password=?, estado=?, usuario_modificacion=?, fecha_modificacion=? WHERE username = ?");
+            $stm = $this->db->prepare("UPDATE newlafarnet.users SET password=?, estado=?, usuario_modificacion=?, fecha_modificacion=? WHERE username = ?");
             $stm->execute(
                 array(
                     Hash::create('sha256', $data['password'], 'n4d43sm4s1mp0rt4nt4qu3sus4lud'),
@@ -342,12 +446,11 @@ on u.id_area=a.id inner join estados e on u.estado = e.id where u.username=?");
                 array(
                     Hash::create('sha256', $data['password'], 'n4d43sm4s1mp0rt4nt4qu3sus4lud'),
                     1,
-                    $data['username'],
+                    base64_decode($data['username']),
                     date('Y-m-d H:i:s'),
-                    $data['username']
+                    base64_decode($data['username'])
                 )
             );
-
             $this->response->setStatus(200);
             $this->response->message=$this->response->getMessageForCode(200);
             return $this->response;

@@ -129,6 +129,20 @@ $app->group('/sacccertificadoanalisis/', function () {
         );
     });
     
+    $this->post('saveMP', function ($req, $res) {
+        $um = new SaccCertificadoAnalisisModel();
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->InsertMP(
+                    $req->getParsedBody()
+                )
+            )
+        );
+    });
+
     $this->post('savec', function ($req, $res) {
         $um = new SaccCertificadoAnalisisModel();
         return $res

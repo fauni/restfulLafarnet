@@ -17,6 +17,20 @@ $app->group('/usuario/', function () {
         );
     });
 
+    $this->get('getc', function ($req, $res, $args) {
+        $um = new UsuarioModel();
+        $this->logger->info("Consulta Usuario: ".$res); 
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->withHeader('Access-Control-Allow-Origin', '*')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->GetCompleter()
+            )
+        );
+    });
+
     $this->get('get/{username}', function ($req, $res, $args) {
         $um = new UsuarioModel();
         
@@ -120,6 +134,35 @@ $app->group('/usuario/', function () {
         );
     });
 
+    
+    $this->put('updateSuperAreaForUser', function ($req, $res) {
+        $um = new UsuarioModel();  
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->updateSuperAreaForUser(
+                    $req->getParsedBody()
+                )
+            )
+        );      
+    });
+
+    $this->put('updateSuperiorForUser', function ($req, $res) {
+      $um = new UsuarioModel();  
+      return $res
+         ->withHeader('Content-type', 'application/json')
+         ->getBody()
+         ->write(
+          json_encode(
+              $um->updateSuperiorForUser(
+                  $req->getParsedBody()
+              )
+          )
+      );      
+    });
+
     $this->put('changePassword', function ($req, $res) {
       $um = new UsuarioModel();  
       return $res
@@ -133,6 +176,7 @@ $app->group('/usuario/', function () {
           )
       );      
     });
+
 
     $this->put('changePasswordForUser', function ($req, $res) {
       $um = new UsuarioModel();  
