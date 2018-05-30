@@ -106,13 +106,14 @@ from sacc_analistas a inner join users u on u.username = a.username where a.user
             $actualPath = "C:\\xampp\htdocs\\newApiLafarnet\\assets\\imagenes_firmas\\".$data['id_firma'].'.'.$ext;
             
             if (move_uploaded_file($tempPath, $actualPath)) {
-        	   $stm = $this->db->prepare("INSERT INTO sacc_analistas (codigo, username, grado, especialidad, id_firma, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion) VALUES (?,?,?,?,?,?,?,?,?);");
+        	   $stm = $this->db->prepare("INSERT INTO sacc_analistas (codigo, username, grado, especialidad, id_firma,rol, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion) VALUES (?,?,?,?,?,?,?,?,?,?);");
                 $stm->execute(array(
                     $data['codigo'], 
                     $data['username'], 
                     $data['grado'], 
                     $data['especialidad'],
                     $data['id_firma'].'.'.$ext,
+                    $data['rol'],
                     $data['usuario_modificacion'],
                     date('Y-m-d H:i:s'),
                     $data['usuario_creacion'],
