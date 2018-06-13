@@ -50,6 +50,20 @@ $app->group('/etapaproceso/', function () {
             )
         );
     });
+
+    $this->post('save', function ($req, $res) {
+        $um = new EtapasProcesoModel();
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->saveTHRProceso(
+                    $req->getParsedBody()
+                )
+            )
+        );
+    });
 /*
     $this->put('edit', function ($req, $res) {
         $um = new PublicacionModel();

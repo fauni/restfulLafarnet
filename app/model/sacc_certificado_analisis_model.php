@@ -266,7 +266,7 @@ class SaccCertificadoAnalisisModel
                 $data['fecha_fabricacion'],
                 $data['fecha_vencimiento'],
                 $data['cantidad_fabricada'],
-                $data['cantidad_liberada'],
+                0, //$data['cantidad_liberada'],
                 $data['tipo_certificado'],
                 $data['tipo_clasificacion_producto'],
                 $data['codigo_producto'],

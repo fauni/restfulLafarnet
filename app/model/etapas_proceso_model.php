@@ -83,4 +83,47 @@ class EtapasProcesoModel
             return $this->response;
         }
     }
+
+    public function saveTHRProceso($data){
+        try
+        {   
+            $result = array();
+
+			$stm = $this->db->prepare("INSERT INTO monitoreo_thr_proceso (id_seccion, id_etapa, lote, codigo_producto, 
+            nombre_producto, hora, fecha, temperatura_original, humedad_relativa_original, temperatura_corregido, 
+            humedad_relativa_corregido, higroscopico, username, estado, usuario_creacion, 
+            fecha_creacion, usuario_modificacion, fecha_modificacion) 
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+			$stm->execute(array(
+                $data['id_seccion'],
+                $data['id_etapa'],
+                $data['lote'],
+                $data['codigo_producto'],
+                $data['nombre_producto'],
+                date('H:i:s'),
+                date('Y-m-d'),
+                $data['temperatura_original'],
+                $data['humedad_relativa_original'],
+                $data['temperatura_corregido'],
+                $data['humedad_relativa_corregido'],
+                $data['higroscopico'],
+                $data['username'],
+                1, // $data['estado'],
+                $data['usuario_creacion'],
+                date('Y-m-d H:i:s'),
+                $data['usuario_modificacion'],
+                date('Y-m-d H:i:s')
+            ));
+
+            $this->response->setBody($data);
+            $this->response->setStatus(200);
+            $this->response->message= $this->response->getMessageForCode(200);
+            return $this->response;
+
+        } catch(Exception $e){
+            $this->response->setStatus($e->getCode());
+            $this->response->message=$e->getMessage();
+            return $this->response;
+        }
+    }
 }
