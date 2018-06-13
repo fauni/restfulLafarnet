@@ -97,6 +97,28 @@ class UsuarioModel{
         }
     }
 
+public function CountByUsername($username)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("SELECT count(*) as cant FROM users u where u.username=?");
+            $stm->execute(array($username));
+
+            $this->response->setStatus(200);
+            $this->response->setBody($stm->fetchAll());
+            $this->response->message=$this->response->getMessageForCode(200);
+            
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
+
     public function GetForEmail($email)
     {
         try

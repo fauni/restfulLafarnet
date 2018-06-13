@@ -136,4 +136,26 @@ from sacc_analistas a inner join users u on u.username = a.username where a.user
             return $this->response;
         }
     }
+
+    public function Delete($id)
+    {
+        try
+        {
+            $result = array();
+
+            $stm = $this->db->prepare("DELETE FROM sacc_analistas WHERE username = ?");
+            $stm->execute(array($id));
+
+            $this->response->setStatus(200);
+            //$this->response->setBody($stm->fetchAll());
+            $this->response->message=$this->response->getMessageForCode(200);
+            
+            return $this->response;
+        }
+        catch(Exception $e)
+        {
+            $this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+        }
+    }
 }

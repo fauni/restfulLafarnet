@@ -17,6 +17,19 @@ $app->group('/usuario/', function () {
         );
     });
 
+    $this->get('countbyusername/{username}', function ($req, $res, $args) {
+        $um = new UsuarioModel();
+        
+        return $res
+           ->withHeader('Content-type', 'application/json')
+           ->getBody()
+           ->write(
+            json_encode(
+                $um->CountByUsername($args['username'])
+            )
+        );
+    });
+
     $this->get('getc', function ($req, $res, $args) {
         $um = new UsuarioModel();
         $this->logger->info("Consulta Usuario: ".$res); 
