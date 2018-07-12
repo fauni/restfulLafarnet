@@ -167,7 +167,8 @@ public function CountByUsername($username)
 
             //$actualPath = dirname(__FILE__)."\\temp\\".$actualName;
             $actualPath = "C:\\xampp\htdocs\\newApiLafarnet\\assets\\imagenes_users\\".$data['foto'];
-            
+            //$actualPath = "/var/www/html/newApiLafarnet/assets/imagenes_users/".$data['foto']; // Ruta Server Centos
+
             if (move_uploaded_file($tempPath, $actualPath)) {
 
                 $stm = $this->db->prepare("INSERT INTO users (first_name, last_name, email_address, username, password, id_cargo, id_regional, id_grupo, id_superior, id_area, id_seccion, foto, estado, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
@@ -203,7 +204,7 @@ public function CountByUsername($username)
                         $data['username'],
                         Hash::create('sha256', $data['password'], 'n4d43sm4s1mp0rt4nt4qu3sus4lud'),
                         'never',
-                        '1',
+                        '3',
                         '1',
                         '',
                         'live',

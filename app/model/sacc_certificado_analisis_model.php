@@ -207,9 +207,9 @@ class SaccCertificadoAnalisisModel
         {   
             $stm = $this->db->prepare("INSERT INTO sacc_certificado_analisis (codigo_certificado, codigo_analista, 
             protocolo, fecha_analisis, lote, fecha_fabricacion, fecha_vencimiento, cantidad_fabricada, cantidad_liberada, 
-            tipo_certificado, tipo_clasificacion_producto, codigo_producto, dictamen, observaciones, tipo_impresion, 
+            tipo_certificado, tipo_clasificacion_producto, codigo_producto, dictamen, presentacion, conservacionyalm, referencias, observaciones, tipo_impresion, 
             nombre_producto, concentracion, forma_farmaceutica, nombre_proveedor, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
             $stm->execute(array(
                 $data['codigo_certificado'],
                 $data['codigo_analista'],
@@ -224,6 +224,9 @@ class SaccCertificadoAnalisisModel
                 $data['tipo_clasificacion_producto'],
                 $data['codigo_producto'],
                 $data['dictamen'],
+                $data['presentacion'],
+                $data['conservacionyalm'],
+                $data['referencias'],
                 $data['observaciones'],
                 $data['tipo_impresion'],
                 $data['nombre_producto'],
@@ -252,10 +255,11 @@ class SaccCertificadoAnalisisModel
         try
         {   
             $stm = $this->db->prepare("INSERT INTO sacc_certificado_analisis (codigo_certificado, codigo_analista, 
-            protocolo, fecha_analisis, lote, fecha_fabricacion, fecha_vencimiento, cantidad_fabricada, cantidad_liberada, 
-            tipo_certificado, tipo_clasificacion_producto, codigo_producto, dictamen, observaciones, tipo_impresion, 
-            nombre_producto, concentracion, forma_farmaceutica, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+            protocolo, fecha_analisis, lote, fecha_fabricacion, fecha_vencimiento, cantidad_fabricada, 
+            cantidad_liberada, tipo_certificado, tipo_clasificacion_producto, codigo_producto, dictamen, 
+            presentacion, conservacionyalm, referencias, observaciones, tipo_impresion, nombre_producto, 
+            concentracion, forma_farmaceutica, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
 ");
             $stm->execute(array(
                 $data['codigo_certificado'],
@@ -271,6 +275,9 @@ class SaccCertificadoAnalisisModel
                 $data['tipo_clasificacion_producto'],
                 $data['codigo_producto'],
                 $data['dictamen'],
+                $data['presentacion'],
+                $data['conservacionyalm'],
+                $data['referencias'],
                 $data['observaciones'],
                 $data['tipo_impresion'],
                 $data['nombre_producto'],

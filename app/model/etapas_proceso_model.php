@@ -61,6 +61,32 @@ class EtapasProcesoModel
 		}
     }
 
+    public function getEtapaForLote($id)
+    {
+        $newid = str_replace('|', '/', $id);
+		try
+		{
+			$result = array();
+
+			$stm = $this->db->prepare("SELECT distinct(e.nombre_etapa) as etapa, 'A' as icon
+                        FROM monitoreo_thr_proceso m
+                        INNER JOIN etapas_proceso e ON e.id_etapa_proceso = m.id_etapa
+                        WHERE lote = ?");
+			$stm->execute(array($newid));
+
+			$this->response->setStatus(200);
+			$this->response->setBody($stm->fetchAll());
+            $this->response->message=$this->response->getMessageForCode(200);
+            
+            return $this->response;
+		}
+		catch(Exception $e)
+		{
+			$this->response->setResponse(false, $e->getMessage());
+            return $this->response;
+		}
+    }
+
     public function getEtapaForProceso($data){
         try
         {   

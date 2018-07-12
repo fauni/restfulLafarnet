@@ -24,7 +24,7 @@ class PublicacionModel
         {
             $result = array();
 
-            $stm = $this->db->prepare("SELECT * FROM $this->table order by fechaPublicacion desc");
+            $stm = $this->db->prepare("SELECT * FROM $this->table where estado=1 order by fechaPublicacion desc");
             $stm->execute();
             
             $this->response->setStatus(200);
@@ -123,7 +123,8 @@ class PublicacionModel
 
             $nombreModificado = $data["username"]."_".$data["id_area"]."_".date('mdY_His')."_".$soloNombre.".".$ext;
             //$actualPath = dirname(__FILE__)."\\temp\\".$actualName;
-            $actualPath = "C:\\xampp\htdocs\\newApiLafarnet\\assets\\publicaciones_images\\".$nombreModificado;
+            $actualPath = "D:\\xampp\htdocs\\newApiLafarnet\\assets\\publicaciones_images\\".$nombreModificado;
+			//$actualPath = "/var/www/html/newApiLafarnet/assets/publicaciones_images/".$nombreModificado;
             if (move_uploaded_file($tempPath, $actualPath)) {
 
                 $stm = $this->db->prepare("INSERT INTO publicacion (titulo, nombreAdjunto, extension, usuarioPublicacion, idTipo , fechaPublicacion, fechaCaduca, estado, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion)

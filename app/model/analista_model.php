@@ -104,7 +104,8 @@ from sacc_analistas a inner join users u on u.username = a.username where a.user
 
             //$actualPath = dirname(__FILE__)."\\temp\\".$actualName;
             $actualPath = "C:\\xampp\htdocs\\newApiLafarnet\\assets\\imagenes_firmas\\".$data['id_firma'].'.'.$ext;
-            
+            //$actualPath = "/var/www/html/newApiLafarnet/assets/imagenes_firmas/".$data['id_firma'].'.'.$ext;// Ruta Server Centos
+
             if (move_uploaded_file($tempPath, $actualPath)) {
         	   $stm = $this->db->prepare("INSERT INTO sacc_analistas (codigo, username, grado, especialidad, id_firma,rol, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion) VALUES (?,?,?,?,?,?,?,?,?,?);");
                 $stm->execute(array(

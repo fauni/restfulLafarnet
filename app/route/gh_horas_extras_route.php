@@ -1,10 +1,10 @@
 <?php
-use App\Model\EtapasProcesoModel;
+use App\Model\GhHorasExtrasModel;
 //use Slim\Http\UploadedFile;
 //use Slim\Http\Request;
 //use Slim\Http\Response;
 
-$app->group('/etapaproceso/', function () {
+$app->group('/he/', function () {
     
     $this->get('test', function ($req, $res, $args) {
         return $res->getBody()
@@ -12,8 +12,8 @@ $app->group('/etapaproceso/', function () {
     });
     
     $this->get('get', function ($req, $res, $args) {
-        $um = new EtapasProcesoModel();
-        
+        $um = new GhHorasExtrasModel();
+        $this->logger->info("Consulta Cargo: ".$res); 
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
@@ -25,7 +25,7 @@ $app->group('/etapaproceso/', function () {
     });
     
     $this->get('get/{id}', function ($req, $res, $args) {
-        $um = new EtapasProcesoModel();
+        $um = new GhHorasExtrasModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -37,49 +37,23 @@ $app->group('/etapaproceso/', function () {
         );
     });
 
-    $this->get('getetapaforlote/{id}', function ($req, $res, $args) {
-        $um = new EtapasProcesoModel();
+    $this->post('save', function ($req, $res) {
+        $um = new GhHorasExtrasModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
            ->getBody()
            ->write(
             json_encode(
-                $um->getEtapaForLote($args['id'])
-            )
-        );
-    });
-
-    $this->post('getEtapaForProceso/', function ($req, $res) {
-        $um = new EtapasProcesoModel();
-        return $res
-           ->withHeader('Content-type', 'application/json')
-           ->getBody()
-           ->write(
-            json_encode(
-                $um->getEtapaForProceso(
+                $um->Insert(
                     $req->getParsedBody()
                 )
             )
         );
     });
 
-    $this->post('save', function ($req, $res) {
-        $um = new EtapasProcesoModel();
-        return $res
-           ->withHeader('Content-type', 'application/json')
-           ->getBody()
-           ->write(
-            json_encode(
-                $um->saveTHRProceso(
-                    $req->getParsedBody()
-                )
-            )
-        );
-    });
-/*
     $this->put('edit', function ($req, $res) {
-        $um = new PublicacionModel();
+        $um = new GhHorasExtrasModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -94,7 +68,7 @@ $app->group('/etapaproceso/', function () {
     });
 
     $this->delete('delete/{id}', function ($req, $res, $args) {
-        $um = new PublicacionModel();
+        $um = new GhHorasExtrasModel();
         
         return $res
            ->withHeader('Content-type', 'application/json')
@@ -104,5 +78,6 @@ $app->group('/etapaproceso/', function () {
                 $um->Delete($args['id'])
             )
         );
-    });*/
+    });
+
 });
